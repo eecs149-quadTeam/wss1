@@ -8,5 +8,7 @@ io.on('connection', function (socket) {
 
     socket.on('message', function (msg) {
         console.log('Moving Kobuki to ' + msg + '...');
+
+        io.emit('Received message: ' + msg);
     });
 });
