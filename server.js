@@ -16,12 +16,19 @@ console.log("HTTP server listening on %d...", port);
 var wss = new WebSocketServer({server: server});
 console.log("WebSocket server created...");
 
+wss.broadcast = function broadcast(data) {
+    wss.clients.forEach(function each(client) {
+        client.send(data);
+    });
+};
+
 wss.on("connection", function(ws) {
-  console.log("New socket connected...");
+    console.log("New socket connected...");
 
-  ws.on('message', function (msg) {
-      console.log('Moving Kobuki to ' + msg + '...');
+    ws.on('message', function (msg) {
+        var turn_amt = msg * 90;
+        console.log('Turning Kobuki ' + turn_amt + ' degrees and moving forward 1 step...');
 
-      ws.send('ACK: ' + msg);
-  });
+        wss.broadcast(msg);
+    });
 });
