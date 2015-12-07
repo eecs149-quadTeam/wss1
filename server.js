@@ -29,6 +29,6 @@ wss.on("connection", function(ws) {
         var turn_amt = msg * 90;
         console.log('Turning Kobuki ' + turn_amt + ' degrees and moving forward 1 step...');
 
-        wss.broadcast(msg);
+        // wss.broadcast(msg);
     });
 });
